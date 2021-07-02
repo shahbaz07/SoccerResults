@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.soccer.results.viewmodel.SoccerResultsViewModel
 import com.soccer.results.databinding.SoccerResultDetailFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SoccerResultDetailFragment : Fragment() {
 
     private lateinit var binding: SoccerResultDetailFragmentBinding
