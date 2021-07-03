@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
             app:layout_constraintStart_toEndOf="@id/team_one_logo_container"
