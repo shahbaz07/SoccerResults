@@ -45,10 +45,13 @@ class SoccerResultsFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.soccerResults.collect { soccerResults ->
-                    binding.loading.visibility = View.GONE
                     when (soccerResults) {
-                        is SoccerResultState.Success -> adapter.updateData(soccerResults.results)
-                        is SoccerResultState.Error -> Timber.e("Error")
+                        is SoccerResultState.Success -> {
+                            binding.loading.visibility = View.GONE
+                            adapter.updateData(soccerResults.results)
+                        }
+                        is SoccerResultState.Error -> binding.loading.visibility = View.GONE
+                        is SoccerResultState.Loading -> binding.loading.visibility = View.VISIBLE
                     }
                 }
             }
