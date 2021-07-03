@@ -25,14 +25,12 @@ class SoccerResultViewHolder(
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
             .apply(
-                RequestOptions().override(64, 64).circleCrop()
-                /*.placeholder(R.drawable.placehoder)*/
+                RequestOptions().override(72, 72).circleCrop()
             ).into(binding.teamOneLogo)
         binding.teamTwoName.text = result.teamTwoName
         Glide.with(binding.root.context).load(result.teamTwoLogo)
             .apply(
-                RequestOptions().override(64, 64).circleCrop()
-                /*.placeholder(R.drawable.placehoder)*/
+                RequestOptions().override(72, 72).circleCrop()
             ).into(binding.teamTwoLogo)
 
         binding.score.text = result.score

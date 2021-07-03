@@ -67,17 +67,17 @@ class SoccerResultDetailFragment : Fragment() {
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
             .apply(
-                RequestOptions().override(64, 64).circleCrop()
-                /*.placeholder(R.drawable.placehoder)*/
+                RequestOptions().override(72, 72).circleCrop()
             ).into(binding.teamOneLogo)
         binding.teamTwoName.text = result.teamTwoName
         Glide.with(binding.root.context).load(result.teamTwoLogo)
             .apply(
-                RequestOptions().override(64, 64).circleCrop()
-                /*.placeholder(R.drawable.placehoder)*/
+                RequestOptions().override(72, 72).circleCrop()
             ).into(binding.teamTwoLogo)
 
-        binding.score.text = result.score
+        val scores = result.score.split("-")
+        binding.teamOneScore.text = scores[0]
+        binding.teamTwoScore.text = scores[1]
         val date = dateParseFormat.parse(result.dateTime)
         date?.let {
             binding.date.text = dateDisplayFormat.format(it)

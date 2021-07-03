@@ -48,6 +48,9 @@ class SoccerResultsFragment : Fragment() {
                     when (soccerResults) {
                         is SoccerResultState.Success -> {
                             binding.loading.visibility = View.GONE
+                            if (binding.swipeRefresh.isRefreshing) {
+                                binding.swipeRefresh.isRefreshing = false
+                            }
                             adapter.updateData(soccerResults.results)
                         }
                         is SoccerResultState.Error -> binding.loading.visibility = View.GONE
@@ -76,5 +79,9 @@ class SoccerResultsFragment : Fragment() {
             }
         })
         binding.soccerResultsView.adapter = adapter
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.fetchSoccerResults()
+        }
     }
 }

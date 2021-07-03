@@ -10,12 +10,21 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/team_one_logo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+        <FrameLayout
+            android:id="@+id/team_one_logo_container"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:background="@drawable/logo_bg"
+            android:elevation="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/team_one_logo"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/team_one_name"
@@ -27,15 +36,24 @@
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/team_one_logo"
+            app:layout_constraintTop_toBottomOf="@id/team_one_logo_container"
             tools:text="FC" />
 
-        <ImageView
-            android:id="@+id/team_two_logo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+        <FrameLayout
+            android:id="@+id/team_two_logo_container"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:background="@drawable/logo_bg"
+            android:elevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/team_two_logo"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/team_two_name"
@@ -47,7 +65,7 @@
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/team_two_logo"
+            app:layout_constraintTop_toBottomOf="@id/team_two_logo_container"
             tools:text="FC" />
 
         <TextView
@@ -58,8 +76,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
-            app:layout_constraintStart_toEndOf="@id/team_one_logo"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo_container"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1-2" />
 
@@ -71,8 +89,8 @@
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
-            app:layout_constraintStart_toEndOf="@id/team_one_logo"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo_container"
             app:layout_constraintTop_toBottomOf="@id/score"
             tools:text="1-2" />
 
@@ -85,8 +103,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
-            app:layout_constraintStart_toEndOf="@id/team_one_logo"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo_container"
             app:layout_constraintTop_toBottomOf="@id/date"
             tools:text="1-2" />
 
