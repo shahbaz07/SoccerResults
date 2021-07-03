@@ -18,6 +18,7 @@ import com.soccer.results.R
 import com.soccer.results.databinding.SoccerResultsFragmentBinding
 import com.soccer.results.model.SoccerResult
 import com.soccer.results.model.SoccerResultState
+import com.soccer.results.util.NetworkState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -33,28 +34,43 @@ class SoccerResultsFragment : Fragment() {
 
     private lateinit var adapter: SoccerResultsAdapter
 
+    private lateinit var networkState: NetworkState
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = SoccerResultsFragmentBinding.inflate(inflater)
+        context?.let {
+            networkState = NetworkState(it)
+        }
         initViews()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        networkState.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.offline.visibility = View.GONE
+                binding.swipeRefresh.isRefreshing = true
+                viewModel.fetchSoccerResults()
+            } else {
+                binding.offline.visibility = View.VISIBLE
+            }
+        }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.soccerResults.collect { soccerResults ->
                     when (soccerResults) {
                         is SoccerResultState.Success -> {
-                            binding.loading.visibility = View.GONE
+                            binding.swipeRefresh.isRefreshing = false
                             if (binding.swipeRefresh.isRefreshing) {
                                 binding.swipeRefresh.isRefreshing = false
                             }
                             adapter.updateData(soccerResults.results)
                         }
-                        is SoccerResultState.Error -> binding.loading.visibility = View.GONE
-                        is SoccerResultState.Loading -> binding.loading.visibility = View.VISIBLE
+                        is SoccerResultState.Error -> binding.swipeRefresh.isRefreshing = false
+                        is SoccerResultState.Loading -> binding.swipeRefresh.isRefreshing = true
                     }
                 }
             }
@@ -63,7 +79,7 @@ class SoccerResultsFragment : Fragment() {
     }
 
     private fun initViews() {
-        val layoutManager = LinearLayoutManager(this.context)
+        val layoutManager = LinearLayoutManager(context)
         binding.soccerResultsView.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(

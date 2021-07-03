@@ -22,6 +22,21 @@ class SoccerResultsRepositoryImpl @Inject constructor(
         return getSoccerResultsFlow().zip(getMoreSoccerResultsFlow()) { first, second ->
             first + second
         }
+        .onStart {
+            val localData = dao.getAll()
+            if (localData.isNotEmpty()) {
+                val results = mutableListOf<SoccerResult>()
+                for (result in localData) {
+                    results.add(
+                        SoccerResult(
+                            result.teamOneName, result.teamTwoName,
+                            result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
+                        )
+                    )
+                }
+                emit(results)
+            }
+        }
         .onEach {
             val entities = mutableListOf<SoccerResultEntity>()
             for (result in it) {
