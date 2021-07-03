@@ -5,6 +5,7 @@ import com.soccer.results.service.SoccerResultsService
 import com.soccer.results.util.safeApiCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import java.lang.Exception
 import javax.inject.Inject
@@ -17,6 +18,8 @@ class SoccerResultsRepositoryImpl @Inject constructor(
     override suspend fun fetchSoccerResults(): Flow<List<SoccerResult>> {
         return getSoccerResultsFlow().zip(getMoreSoccerResultsFlow()) { first, second ->
             first + second
+        }.onStart {
+            //delay(5000)
         }
         .flowOn(dispatcher)
     }

@@ -10,9 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.soccer.results.viewmodel.SoccerResultsViewModel
 import com.soccer.results.R
 import com.soccer.results.databinding.SoccerResultsFragmentBinding
+import com.soccer.results.model.SoccerResult
 import com.soccer.results.model.SoccerResultState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -27,6 +30,8 @@ class SoccerResultsFragment : Fragment() {
 
     private val viewModel: SoccerResultsViewModel by viewModels()
 
+    private lateinit var adapter: SoccerResultsAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = SoccerResultsFragmentBinding.inflate(inflater)
@@ -38,28 +43,33 @@ class SoccerResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                /*viewModel.soccerResults.collect { soccerResults ->
+                viewModel.soccerResults.collect { soccerResults ->
+                    binding.loading.visibility = View.GONE
                     when (soccerResults) {
-                        is SoccerResultState.Success -> Timber.d("Success")
+                        is SoccerResultState.Success -> adapter.updateData(soccerResults.results)
                         is SoccerResultState.Error -> Timber.e("Error")
                     }
-                }*/
+                }
             }
         }
         viewModel.fetchSoccerResults()
     }
 
-    /*private fun showError(exception: Any): Any {
-
-    }
-
-    private fun showFavoriteNews(news: Any): Any {
-
-    }*/
-
     private fun initViews() {
-        binding.message.setOnClickListener {
-            findNavController().navigate(R.id.action_navigate_to_detail)
-        }
+        val layoutManager = LinearLayoutManager(this.context)
+        binding.soccerResultsView.layoutManager = layoutManager
+
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.soccerResultsView.context,
+            layoutManager.orientation
+        )
+
+        binding.soccerResultsView.addItemDecoration(dividerItemDecoration)
+        adapter = SoccerResultsAdapter(object : SoccerResultItemClickListener {
+            override fun onItemClick(result: SoccerResult) {
+                findNavController().navigate(R.id.action_navigate_to_detail)
+            }
+        })
+        binding.soccerResultsView.adapter = adapter
     }
 }

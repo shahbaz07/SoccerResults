@@ -1,44 +1,27 @@
 package com.soccer.results.ui
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.soccer.results.viewmodel.SoccerResultsViewModel
-import com.soccer.results.databinding.SoccerResultDetailFragmentBinding
+import com.soccer.results.databinding.SoccerResultItemBinding
 import com.soccer.results.model.SoccerResult
-import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-@AndroidEntryPoint
-class SoccerResultDetailFragment : Fragment() {
-
-    private lateinit var binding: SoccerResultDetailFragmentBinding
-
-    private lateinit var viewModel: SoccerResultsViewModel
+class SoccerResultViewHolder(
+    private val binding: SoccerResultItemBinding,
+    private val listener: SoccerResultItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val dateParseFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.ENGLISH)
     private val dateDisplayFormat = SimpleDateFormat("EEE dd MMMM", Locale.ENGLISH)
     private val timeDisplayFormat = SimpleDateFormat("hh:mm aa", Locale.ENGLISH)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        binding = SoccerResultDetailFragmentBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SoccerResultsViewModel::class.java)
-
-        val result = SoccerResult("Liverpool F.C", "New Castle United",
-            "6-0", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnVkgyvVxOrIGUfaoGPOQPbXKzQUKz7faW71gC7nnI_clFEPbQ81EDQ5T575enZ1Ea5PA&usqp=CAU",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnVkgyvVxOrIGUfaoGPOQPbXKzQUKz7faW71gC7nnI_clFEPbQ81EDQ5T575enZ1Ea5PA&usqp=CAU", "25 July 2021 21:00")
+    fun bind(result: SoccerResult) {
+        binding.root.setOnClickListener {
+            listener.onItemClick(it.tag as SoccerResult)
+        }
+        binding.root.tag = result
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
             .apply(

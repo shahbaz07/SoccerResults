@@ -3,19 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="SoccerResultDetailFragmentBinding" />
+    <data class="SoccerResultItemBinding" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context=".ui.SoccerResultsFragment">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/team_one_logo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,50 +21,33 @@
             android:id="@+id/team_one_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@id/team_one_logo"
-            app:layout_constraintStart_toEndOf="@id/team_one_logo"
-            app:layout_constraintTop_toTopOf="@id/team_one_logo"
-            tools:text="FC" />
-
-        <TextView
-            android:id="@+id/vs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/team_one_logo"
-            android:text="VS" />
+            tools:text="FC" />
 
         <ImageView
             android:id="@+id/team_two_logo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vs" />
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/team_two_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@id/team_two_logo"
-            app:layout_constraintStart_toEndOf="@id/team_two_logo"
-            app:layout_constraintTop_toTopOf="@id/team_two_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team_two_logo"
             tools:text="FC" />
 
         <TextView
@@ -74,25 +55,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:layout_marginTop="20dp"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/team_two_logo"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="1-2" />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo"
             app:layout_constraintTop_toBottomOf="@id/score"
             tools:text="1-2" />
 
@@ -100,13 +80,13 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/team_two_logo"
+            app:layout_constraintStart_toEndOf="@id/team_one_logo"
             app:layout_constraintTop_toBottomOf="@id/date"
             tools:text="1-2" />
 
