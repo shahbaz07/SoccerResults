@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_view_padding">16dp</dimen>
+    <dimen name="logo_container_size">96dp</dimen>
+    <dimen name="logo_size">72dp</dimen>
+    <dimen name="logo_margin">@dimen/logo_size</dimen>
+    <dimen name="title_text_size">18sp</dimen>
+    <dimen name="default_top_margin">20dp</dimen>
+    <dimen name="default_elevation">2dp</dimen>
+    <dimen name="default_box_padding">10dp</dimen>
+    <dimen name="default_box_margin">10dp</dimen>
+    <dimen name="box_size">48dp</dimen>
+    <dimen name="line_size">2dp</dimen>
+    <dimen name="box_margin">5dp</dimen>
+    <dimen name="box_padding">5dp</dimen>
+    <dimen name="heading_text_size">48sp</dimen>
+    <dimen name="text_margin">2dp</dimen>
+</resources>

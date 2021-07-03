@@ -17,21 +17,20 @@ class SoccerResultViewHolder(
     private val dateDisplayFormat = SimpleDateFormat("EEE dd MMMM", Locale.ENGLISH)
     private val timeDisplayFormat = SimpleDateFormat("hh:mm aa", Locale.ENGLISH)
 
-    fun bind(result: SoccerResult) {
+    init {
         binding.root.setOnClickListener {
             listener.onItemClick(it.tag as Int)
         }
+    }
+
+    fun bind(result: SoccerResult) {
         binding.root.tag = result.hashCode()
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
-            .apply(
-                RequestOptions().override(72, 72).circleCrop()
-            ).into(binding.teamOneLogo)
+            .circleCrop().into(binding.teamOneLogo)
         binding.teamTwoName.text = result.teamTwoName
         Glide.with(binding.root.context).load(result.teamTwoLogo)
-            .apply(
-                RequestOptions().override(72, 72).circleCrop()
-            ).into(binding.teamTwoLogo)
+            .circleCrop().into(binding.teamTwoLogo)
 
         binding.score.text = result.score
         val date = dateParseFormat.parse(result.dateTime)

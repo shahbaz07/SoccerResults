@@ -27,7 +27,6 @@ class SoccerResultsViewModel @Inject constructor(private val useCase: SoccerResu
                 }
                 .collect {
                     _soccerResults.value = SoccerResultState.Success(it)
-                    Timber.e("${it.size}")
                 }
         }
     }

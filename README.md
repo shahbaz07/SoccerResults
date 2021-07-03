@@ -15,5 +15,6 @@
 1. Hilt(Dependency injection)
 2. Retrofit
 3. Coroutines
+4. Kotlin Flow
 4. Glide
 5. Room(For local data storage)

@@ -21,6 +21,6 @@ interface SoccerResultDao {
     @Delete
     fun delete(result: SoccerResultEntity)
 
-    @Delete
-    fun deleteAll(results: List<SoccerResultEntity>)
+    @Query("DELETE FROM SoccerResultEntity")
+    fun deleteAll()
 }

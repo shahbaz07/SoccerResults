@@ -9,7 +9,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/white"
         tools:context=".ui.SoccerResultsFragment">
 
         <LinearLayout
@@ -25,12 +25,12 @@
                 android:id="@+id/offline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/black"
+                android:background="@color/black"
                 android:gravity="center"
-                android:paddingVertical="5dp"
+                android:paddingVertical="@dimen/box_padding"
                 android:text="@string/offline"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_text_size"
                 android:visibility="gone" />
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

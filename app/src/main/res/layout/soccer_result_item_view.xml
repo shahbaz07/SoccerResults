@@ -8,22 +8,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="16dp">
+        android:background="@color/white"
+        android:padding="@dimen/default_view_padding">
 
         <FrameLayout
             android:id="@+id/team_one_logo_container"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="@dimen/logo_container_size"
+            android:layout_height="@dimen/logo_container_size"
             android:background="@drawable/logo_bg"
-            android:elevation="2dp"
+            android:elevation="@dimen/default_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/team_one_logo"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/logo_size"
                 android:layout_gravity="center" />
         </FrameLayout>
 
@@ -31,9 +31,9 @@
             android:id="@+id/team_one_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,17 +42,17 @@
 
         <FrameLayout
             android:id="@+id/team_two_logo_container"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="@dimen/logo_container_size"
+            android:layout_height="@dimen/logo_container_size"
             android:background="@drawable/logo_bg"
-            android:elevation="2dp"
+            android:elevation="@dimen/default_elevation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/team_two_logo"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/logo_size"
                 android:layout_gravity="center" />
         </FrameLayout>
 
@@ -60,9 +60,9 @@
             android:id="@+id/team_two_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,8 +73,8 @@
             android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
@@ -86,9 +86,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text_size"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"
             app:layout_constraintStart_toEndOf="@id/team_one_logo_container"
@@ -99,9 +99,9 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/team_two_logo_container"

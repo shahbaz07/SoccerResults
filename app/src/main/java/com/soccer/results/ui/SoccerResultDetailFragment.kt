@@ -66,14 +66,10 @@ class SoccerResultDetailFragment : Fragment() {
     private fun updateData(result: SoccerResult) {
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
-            .apply(
-                RequestOptions().override(72, 72).circleCrop()
-            ).into(binding.teamOneLogo)
+            .circleCrop().into(binding.teamOneLogo)
         binding.teamTwoName.text = result.teamTwoName
         Glide.with(binding.root.context).load(result.teamTwoLogo)
-            .apply(
-                RequestOptions().override(72, 72).circleCrop()
-            ).into(binding.teamTwoLogo)
+            .circleCrop().into(binding.teamTwoLogo)
 
         val scores = result.score.split("-")
         binding.teamOneScore.text = scores[0]

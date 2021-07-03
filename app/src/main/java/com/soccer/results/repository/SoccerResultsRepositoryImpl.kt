@@ -41,32 +41,25 @@ class SoccerResultsRepositoryImpl @Inject constructor(
     private fun getLocalData(): List<SoccerResult> {
         val localData = dao.getAll()
         return if (localData.isNotEmpty()) {
-            val results = mutableListOf<SoccerResult>()
-            for (result in localData) {
-                results.add(
+            localData.map {
                     SoccerResult(
-                        result.teamOneName, result.teamTwoName,
-                        result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
+                        it.teamOneName, it.teamTwoName,
+                        it.score, it.teamOneLogo, it.teamTwoLogo, it.dateTime
                     )
-                )
             }
-             results
         } else {
             emptyList()
         }
     }
 
     private fun updateLocalData(results: List<SoccerResult>) {
-        val entities = mutableListOf<SoccerResultEntity>()
-        for (result in results) {
-            entities.add(
-                SoccerResultEntity(
-                    result.hashCode(), result.teamOneName, result.teamTwoName,
-                    result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
-                )
+        val entities = results.map {
+            SoccerResultEntity(
+                it.hashCode(), it.teamOneName, it.teamTwoName,
+                it.score, it.teamOneLogo, it.teamTwoLogo, it.dateTime
             )
         }
-        dao.deleteAll(entities)
+        dao.deleteAll()
         dao.insertAll(entities)
     }
 
