@@ -22,7 +22,7 @@ class SoccerResultsViewModel @Inject constructor(private val useCase: SoccerResu
     fun fetchSoccerResults() {
         viewModelScope.launch {
             useCase.fetchSoccerResults()
-                .catch { exception -> // Executes in the consumer's context
+                .catch { exception ->
                     _soccerResults.value = SoccerResultState.Error(exception)
                 }
                 .collect {

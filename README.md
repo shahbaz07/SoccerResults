@@ -16,3 +16,4 @@
 2. Retrofit
 3. Coroutines
 4. Glide
+5. Room(For local data storage)

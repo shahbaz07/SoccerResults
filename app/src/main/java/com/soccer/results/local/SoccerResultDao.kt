@@ -8,6 +8,7 @@ import com.soccer.results.local.entity.SoccerResultEntity
 
 @Dao
 interface SoccerResultDao {
+
     @Query("SELECT * FROM SoccerResultEntity")
     fun getAll(): List<SoccerResultEntity>
 

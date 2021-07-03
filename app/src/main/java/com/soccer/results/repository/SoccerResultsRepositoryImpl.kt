@@ -3,6 +3,8 @@ package com.soccer.results.repository
 import com.soccer.results.local.SoccerResultDao
 import com.soccer.results.local.entity.SoccerResultEntity
 import com.soccer.results.model.SoccerResult
+import com.soccer.results.repository.exception.NoDataException
+import com.soccer.results.repository.exception.ServerException
 import com.soccer.results.service.SoccerResultsService
 import com.soccer.results.util.safeApiCall
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,34 +25,54 @@ class SoccerResultsRepositoryImpl @Inject constructor(
             first + second
         }
         .onStart {
-            val localData = dao.getAll()
+            // Reading local data and updating ui
+            val localData = getLocalData()
             if (localData.isNotEmpty()) {
-                val results = mutableListOf<SoccerResult>()
-                for (result in localData) {
-                    results.add(
-                        SoccerResult(
-                            result.teamOneName, result.teamTwoName,
-                            result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
-                        )
-                    )
-                }
-                emit(results)
+                emit(localData)
             }
         }
         .onEach {
-            val entities = mutableListOf<SoccerResultEntity>()
-            for (result in it) {
-                entities.add(SoccerResultEntity(result.hashCode(), result.teamOneName, result.teamTwoName,
-                result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime))
-            }
-            dao.deleteAll(entities)
-            dao.insertAll(entities)
+            // Removing old data and saving new data to local database
+            updateLocalData(it)
         }
         .flowOn(dispatcher)
     }
 
+    private fun getLocalData(): List<SoccerResult> {
+        val localData = dao.getAll()
+        return if (localData.isNotEmpty()) {
+            val results = mutableListOf<SoccerResult>()
+            for (result in localData) {
+                results.add(
+                    SoccerResult(
+                        result.teamOneName, result.teamTwoName,
+                        result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
+                    )
+                )
+            }
+             results
+        } else {
+            emptyList()
+        }
+    }
+
+    private fun updateLocalData(results: List<SoccerResult>) {
+        val entities = mutableListOf<SoccerResultEntity>()
+        for (result in results) {
+            entities.add(
+                SoccerResultEntity(
+                    result.hashCode(), result.teamOneName, result.teamTwoName,
+                    result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime
+                )
+            )
+        }
+        dao.deleteAll(entities)
+        dao.insertAll(entities)
+    }
+
     private fun getSoccerResultsFlow() : Flow<List<SoccerResult>> {
         return flow {
+            // Fetching data from API
             val response = safeApiCall {
                 service.fetchSoccerResults()
             }
@@ -58,16 +80,17 @@ class SoccerResultsRepositoryImpl @Inject constructor(
                 response.body()?.let {
                     emit(it)
                 } ?: kotlin.run {
-                    throw Exception()
+                    throw NoDataException()
                 }
             } else {
-                throw Exception()
+                throw ServerException()
             }
         }
     }
 
     private fun getMoreSoccerResultsFlow() : Flow<List<SoccerResult>> {
         return flow {
+            // Fetching more data from API
             val response = safeApiCall {
                 service.fetchMoreSoccerResults()
             }
@@ -75,10 +98,10 @@ class SoccerResultsRepositoryImpl @Inject constructor(
                 response.body()?.let {
                     emit(it)
                 } ?: kotlin.run {
-                    throw Exception()
+                    throw NoDataException()
                 }
             } else {
-                throw Exception()
+                throw ServerException()
             }
         }
     }
