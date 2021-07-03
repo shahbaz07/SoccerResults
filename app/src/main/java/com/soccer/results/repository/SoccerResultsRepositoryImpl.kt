@@ -1,5 +1,7 @@
 package com.soccer.results.repository
 
+import com.soccer.results.local.SoccerResultDao
+import com.soccer.results.local.entity.SoccerResultEntity
 import com.soccer.results.model.SoccerResult
 import com.soccer.results.service.SoccerResultsService
 import com.soccer.results.util.safeApiCall
@@ -12,14 +14,22 @@ import javax.inject.Inject
 
 class SoccerResultsRepositoryImpl @Inject constructor(
     private val service: SoccerResultsService,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dao: SoccerResultDao
 ) : SoccerResultsRepository {
 
     override suspend fun fetchSoccerResults(): Flow<List<SoccerResult>> {
         return getSoccerResultsFlow().zip(getMoreSoccerResultsFlow()) { first, second ->
             first + second
-        }.onStart {
-            //delay(5000)
+        }
+        .onEach {
+            val entities = mutableListOf<SoccerResultEntity>()
+            for (result in it) {
+                entities.add(SoccerResultEntity(result.hashCode(), result.teamOneName, result.teamTwoName,
+                result.score, result.teamOneLogo, result.teamTwoLogo, result.dateTime))
+            }
+            dao.deleteAll(entities)
+            dao.insertAll(entities)
         }
         .flowOn(dispatcher)
     }

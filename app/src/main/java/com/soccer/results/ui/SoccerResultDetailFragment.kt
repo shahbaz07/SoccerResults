@@ -6,12 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.soccer.results.viewmodel.SoccerResultsViewModel
 import com.soccer.results.databinding.SoccerResultDetailFragmentBinding
 import com.soccer.results.model.SoccerResult
+import com.soccer.results.model.SoccerResultState
+import com.soccer.results.viewmodel.SoccerResultDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,7 +29,7 @@ class SoccerResultDetailFragment : Fragment() {
 
     private lateinit var binding: SoccerResultDetailFragmentBinding
 
-    private lateinit var viewModel: SoccerResultsViewModel
+    private val viewModel: SoccerResultDetailViewModel by viewModels()
 
     private val dateParseFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.ENGLISH)
     private val dateDisplayFormat = SimpleDateFormat("EEE dd MMMM", Locale.ENGLISH)
@@ -32,13 +41,25 @@ class SoccerResultDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SoccerResultsViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.soccerResult.collect { soccerResults ->
+                    when (soccerResults) {
+                        is SoccerResultState.Success -> updateData(soccerResults.results)
+                        is SoccerResultState.Error -> Timber.e("Error")
+                    }
+                }
+            }
+        }
+        val uid = arguments?.getInt("uid")
+        uid?.let {
+            viewModel.fetchSoccerResults(it)
+        }
+    }
 
-        val result = SoccerResult("Liverpool F.C", "New Castle United",
-            "6-0", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnVkgyvVxOrIGUfaoGPOQPbXKzQUKz7faW71gC7nnI_clFEPbQ81EDQ5T575enZ1Ea5PA&usqp=CAU",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnVkgyvVxOrIGUfaoGPOQPbXKzQUKz7faW71gC7nnI_clFEPbQ81EDQ5T575enZ1Ea5PA&usqp=CAU", "25 July 2021 21:00")
+    private fun updateData(result: SoccerResult) {
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
             .apply(

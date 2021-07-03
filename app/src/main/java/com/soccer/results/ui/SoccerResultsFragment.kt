@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -66,8 +67,9 @@ class SoccerResultsFragment : Fragment() {
 
         binding.soccerResultsView.addItemDecoration(dividerItemDecoration)
         adapter = SoccerResultsAdapter(object : SoccerResultItemClickListener {
-            override fun onItemClick(result: SoccerResult) {
-                findNavController().navigate(R.id.action_navigate_to_detail)
+            override fun onItemClick(uid: Int) {
+                val bundle = bundleOf("uid" to uid)
+                findNavController().navigate(R.id.action_navigate_to_detail, bundle)
             }
         })
         binding.soccerResultsView.adapter = adapter

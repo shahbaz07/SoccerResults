@@ -10,12 +10,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DBModule {
 
     @Provides
+    @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
             appContext,

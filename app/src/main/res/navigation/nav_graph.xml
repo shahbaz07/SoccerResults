@@ -17,5 +17,6 @@
         android:id="@+id/soccerResultDetail"
         android:name="com.soccer.results.ui.SoccerResultDetailFragment"
         android:label="SoccerResultDetail"
-        tools:layout="@layout/soccer_result_detail_fragment" />
+        tools:layout="@layout/soccer_result_detail_fragment" >
+    </fragment>
 </navigation>

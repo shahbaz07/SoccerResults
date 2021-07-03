@@ -62,7 +62,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     api 'com.jakewharton.timber:timber:4.7.1'
     api "com.squareup.retrofit2:converter-gson:$retrofit_version"

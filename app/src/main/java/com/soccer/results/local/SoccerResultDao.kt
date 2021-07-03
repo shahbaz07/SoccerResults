@@ -8,18 +8,18 @@ import com.soccer.results.local.entity.SoccerResultEntity
 
 @Dao
 interface SoccerResultDao {
-    @Query("SELECT * FROM SoccerResults")
+    @Query("SELECT * FROM SoccerResultEntity")
     fun getAll(): List<SoccerResultEntity>
 
-    @Query("SELECT * FROM SoccerResults WHERE uid = (:uid)")
-    fun loadAllByIds(uid: Int): SoccerResultEntity
+    @Query("SELECT * FROM SoccerResultEntity WHERE uid = (:uid)")
+    fun loadById(uid: Int): SoccerResultEntity
 
     @Insert
-    fun insertAll(vararg results: SoccerResultEntity)
+    fun insertAll(results: List<SoccerResultEntity>)
 
     @Delete
     fun delete(result: SoccerResultEntity)
 
     @Delete
-    fun deleteAll(vararg result: SoccerResultEntity)
+    fun deleteAll(results: List<SoccerResultEntity>)
 }

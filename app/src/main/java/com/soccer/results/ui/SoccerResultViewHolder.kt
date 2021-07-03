@@ -19,9 +19,9 @@ class SoccerResultViewHolder(
 
     fun bind(result: SoccerResult) {
         binding.root.setOnClickListener {
-            listener.onItemClick(it.tag as SoccerResult)
+            listener.onItemClick(it.tag as Int)
         }
-        binding.root.tag = result
+        binding.root.tag = result.hashCode()
         binding.teamOneName.text = result.teamOneName
         Glide.with(binding.root.context).load(result.teamOneLogo)
             .apply(
